@@ -181,6 +181,5 @@ area = Series(area)
 
 #各シリーズをデータフレーム化
 suumo_df = pd.concat([name, address, age, locations0, locations1, locations2, height, floor, rent, admin, others, floor_plan, area], axis=1)
-print(suumo_df)
 
 #築年数が対応していない！他にも対応していないデータがあるかもしれない！
