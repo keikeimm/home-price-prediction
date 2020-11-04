@@ -172,9 +172,8 @@ for url in urls:
         # 専有面積
         areas = cassetteitems[i].select(".cassetteitem_menseki")
         get_informaion_about_home(areas, area)
-    break
     # プログラムを2秒間停止する
-    # time.sleep(2)
+    time.sleep(2)
 
 # 各リストをシリーズ化
 name = Series(name)
@@ -197,3 +196,4 @@ columns = ['名前', '住所', '立地１', '立地2', '立地3', '築年数',
 suumo_df = pd.DataFrame(columns=columns)
 suumo_df = pd.concat([name, address, age, locations0, locations1, locations2,
                       height, floor, rent, admin, deposit, gratuity, floor_plan, area], axis=1)
+suumo_df.to_csv("suumo_oookayama.csv", encoding='utf-16')
