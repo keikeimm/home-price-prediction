@@ -173,7 +173,7 @@ for url in urls:
         areas = cassetteitems[i].select(".cassetteitem_menseki")
         get_informaion_about_home(areas, area)
     # プログラムを2秒間停止する
-    time.sleep(2)
+    #time.sleep(2)
 
 # 各リストをシリーズ化
 name = Series(name)
