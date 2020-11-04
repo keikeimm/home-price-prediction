@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 df_oookayama = pd.read_csv('suumo_oookayama.csv', sep='\t', encoding='utf-16')
-# 敷金と礼金は一つ一つのでーた
+# 敷金と礼金は一つ一つのデータ
 
 # axis=0は縦方向に連結、ignore_indes=Trueは初めに与えられたindexを無視する。
 df = pd.concat([df_oookayama], axis=0, ignore_index=True)
@@ -172,4 +172,8 @@ df = df[['名前', '住所', '区', '市町村', '間取り', '間取りDK', '�
                 '敷金', '礼金']]
 # カッコを二重にしないとデータフレームにならない(シリーズになる）
 
+<< << << < HEAD
 df.to_csv('suumo_oookayama_data.csv', sep='\t', encoding='utf-16')
+== == == =
+df.to_csv('suumo_oookayama_data.csv', sep='\t', encoding='utf-16')
+>>>>>> > f741d40d6f1e492da4f19576bf9f9670659fd3f4

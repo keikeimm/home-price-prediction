@@ -190,10 +190,12 @@ deposit = Series(deposit)
 gratuity = Series(gratuity)
 floor_plan = Series(floor_plan)
 area = Series(area)
-columns = ['名前', '住所', '立地１', '立地2', '立地3', '築年数',
+columns = ['名前', '住所', '立地1', '立地2', '立地3', '築年数',
            '建物の高さ', '階', '賃料', '管理費', '敷金', '礼金', '間取り', '専有面積']
-# # 各シリーズをデータフレーム化
-suumo_df = pd.DataFrame(columns=columns)
-suumo_df = pd.concat([name, address, age, locations0, locations1, locations2,
+# # 各シリーズをデータフレーム化#axis=1は横に結合
+suumo_df = pd.concat([name, address, locations0, locations1, locations2, age,
                       height, floor, rent, admin, deposit, gratuity, floor_plan, area], axis=1)
-suumo_df.to_csv("suumo_oookayama.csv", encoding='utf-16')
+suumo_df.columns = ['名前', '住所', '立地1', '立地2', '立地3', '築年数',
+                    '建物の高さ', '階', '賃料', '管理費', '敷金', '礼金', '間取り', '専有面積']
+# csvファイルとして保存
+suumo_df.to_csv('suumo_oookayama.csv', sep='\t', encoding='utf-16')
