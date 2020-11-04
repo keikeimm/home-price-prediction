@@ -10,6 +10,7 @@ df = pd.concat([df_oookayama], axis=0)
 # Unnamed: 0というカラムが勝手に追加されている可能性があるため取り除く。
 df.drop(['Unnamed: 0'], axis=1, inplace=True)
 
+#徒歩2と徒歩3はnanの可能性がある,そのため分析にも使いにくい。
 for x in range(len(df)):
     if not df['徒歩2'][x] is None:
         if df['徒歩1'][x] > df['徒歩2'][x]:
