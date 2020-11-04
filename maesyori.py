@@ -8,7 +8,7 @@ df_oookayama = pd.read_csv('suumo_oookayama.csv', sep='\t', encoding='utf-16')
 # axis=0は縦方向に連結、ignore_indes=Trueは初めに与えられたindexを無視する。
 df = pd.concat([df_oookayama], axis=0, ignore_index=True)
 # Unnamed: 0というカラムが勝手に追加されている可能性があるため取り除く。
-# df.drop(['Unnamed: 0'], axis=1, inplace=True)
+df.drop(['Unnamed: 0'], axis=1, inplace=True)
 # 立地を「路線+駅」と「徒歩〜分」に分割
 splitted1 = df['立地1'].str.split('歩', expand=True)
 splitted1.columns = ['立地11', '立地12']
@@ -172,8 +172,5 @@ df = df[['名前', '住所', '区', '市町村', '間取り', '間取りDK', '�
                 '敷金', '礼金']]
 # カッコを二重にしないとデータフレームにならない(シリーズになる）
 
-<< << << < HEAD
+
 df.to_csv('suumo_oookayama_data.csv', sep='\t', encoding='utf-16')
-== == == =
-df.to_csv('suumo_oookayama_data.csv', sep='\t', encoding='utf-16')
->>>>>> > f741d40d6f1e492da4f19576bf9f9670659fd3f4
