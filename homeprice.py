@@ -8,14 +8,14 @@ from pandas import Series, DataFrame
 import time
 
 # suumo大岡山の賃貸情報1ページ目
-url = 'https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=030&bs=040&ra=013&cb=0.0&ct=9999999&et=9999999&cn=9999999&mb=0&mt=9999999&shkr1=03&shkr2=03&shkr3=03&shkr4=03&fw2=&ek=021505520&rn=0215'
+url = 'https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=030&bs=040&ta=13&sc=13105&cb=0.0&ct=9999999&et=9999999&cn=9999999&mb=0&mt=9999999&shkr1=03&shkr2=03&shkr3=03&shkr4=03&fw2=&srch_navi=1'
 
 # データ取得
 result = requests.get(url)
 c = result.content
 
 # HTMLのコードをsoupに入れる。
-soup = BeautifulSoup(c)
+soup = BeautifulSoup(c, 'html.parser')
 
 # 物件リストの部分を切り出し,id:js-bukkennListに囲まれたところがそう？
 summary = soup.find("div", {'id': 'js-bukkenList'})
@@ -198,4 +198,4 @@ suumo_df = pd.concat([name, address, locations0, locations1, locations2, age,
 suumo_df.columns = ['名前', '住所', '立地1', '立地2', '立地3', '築年数',
                     '建物の高さ', '階', '賃料', '管理費', '敷金', '礼金', '間取り', '専有面積']
 # csvファイルとして保存
-suumo_df.to_csv('suumo_oookayama.csv', sep='\t', encoding='utf-16')
+suumo_df.to_csv('suumo_bunkyou.csv', sep='\t', encoding='utf-16')
