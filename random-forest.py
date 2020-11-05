@@ -19,7 +19,7 @@ y = df['賃料+管理費']
 x = analysis_data
 
 #適当にいい感じの割合でサンプルと乱数を設定した。
-x_analysis, x_test, y_analysis, y_test, z_analysis, z_test  = train_test_split(x, y, z, test_size=0.05, random_state=420)
+x_analysis, x_test, y_analysis, y_test, z_analysis, z_test  = train_test_split(x, y, z, test_size=0.2, random_state=1)
 
 clf = RandomForestClassifier(random_state=100)
 clf.fit(x_analysis, y_analysis)
