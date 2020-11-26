@@ -8,8 +8,7 @@ from pandas import Series, DataFrame
 import time
 
 # suumo大岡山の賃貸情報1ページ目
-url = 'https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=030&bs=040&ta=13&sc=13105&cb=0.0&ct=9999999&et=9999999&cn=9999999&mb=0&mt=9999999&shkr1=03&shkr2=03&shkr3=03&shkr4=03&fw2=&srch_navi=1'
-
+url = 'https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=030&bs=040&ra=013&ae=02201&ae=02301&cb=0.0&ct=9999999&et=9999999&cn=9999999&mb=0&mt=9999999&shkr1=03&shkr2=03&shkr3=03&shkr4=03&fw2=&ek=022026730&ek=022018410&ek=022025320&ek=022023450&ek=022020280&ek=022038720&ek=022039270&ek=022033150&ek=022024880&ek=022005650&ek=022010720&ek=022038540&ek=022030290&ek=022032210&ek=022023830&ek=022040940&rn=0220&ek=023034230&ek=023024700&ek=023020660&ek=023037790&ek=023034220&ek=023022390&ek=023036850&ek=023007890&ek=023038250&ek=023038350&ek=023015980&ek=023023580&ek=023000820&ek=023004880&ek=023002970&ek=023033850&ek=023000210&ek=023023250&ek=023027240&rn=0230&rn=0205&rn=0215&srch_navi=1'
 # データ取得
 result = requests.get(url)
 c = result.content
@@ -198,4 +197,4 @@ suumo_df = pd.concat([name, address, locations0, locations1, locations2, age,
 suumo_df.columns = ['名前', '住所', '立地1', '立地2', '立地3', '築年数',
                     '建物の高さ', '階', '賃料', '管理費', '敷金', '礼金', '間取り', '専有面積']
 # csvファイルとして保存
-suumo_df.to_csv('suumo_bunkyou.csv', sep='\t', encoding='utf-16')
+suumo_df.to_csv('suumo_oookayama_around.csv', sep='\t', encoding='utf-16')

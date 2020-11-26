@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 
-df_oookayama = pd.read_csv('suumo_oookayama.csv', sep='\t', encoding='utf-16')
+df_oookayama = pd.read_csv('suumo_oookayama_around.csv', sep='\t', encoding='utf-16')
 # 敷金と礼金は一つ一つのデータ
 
 # axis=0は縦方向に連結、ignore_indes=Trueは初めに与えられたindexを無視する。
@@ -34,7 +34,7 @@ splitted8 = df['立地21'].str.split('/', expand=True)
 splitted8.columns = ['路線2', '駅2']
 splitted8['徒歩2'] = df['立地22']
 splitted9 = df['立地31'].str.split('/', expand=True)
-splitted9.columns = ['路線3', '駅3']
+splitted9.columns = ['路線3', '駅3']#なんかエラー起きた
 splitted9['徒歩3'] = df['立地32']
 
 # 結合
@@ -69,6 +69,7 @@ df['管理費'] = df['管理費'].str.replace(u'円', u'')
 df['築年数'] = df['築年数'].str.replace(u'新築', u'0')  # 新築は築年数0年とする
 df['築年数'] = df['築年数'].str.replace(u'築', u'')
 df['築年数'] = df['築年数'].str.replace(u'年', u'')
+df['築年数'] = df['築年数'].str.replace(u'以上', u'')
 df['専有面積'] = df['専有面積'].str.replace(u'm', u'')
 df['徒歩1'] = df['徒歩1'].str.replace(u'分', u'')
 df['徒歩2'] = df['徒歩2'].str.replace(u'分', u'')
@@ -108,6 +109,7 @@ splitted10.columns = ['階1', '階2']
 splitted10['階1'].str.encode('cp932')
 splitted10['階1'] = splitted10['階1'].str.replace(u'階', u'')
 splitted10['階1'] = splitted10['階1'].str.replace(u'B', u'-')
+splitted10['階1'] = splitted10['階1'].str.replace(u'M2', u'')
 splitted10['階1'] = pd.to_numeric(splitted10['階1'])
 
 df = pd.concat([df, splitted10], axis=1)
@@ -186,11 +188,10 @@ for x in range(len(df)):
         if df['徒歩1'][x] > df['徒歩3'][x]:
             df['徒歩1'][x], df['路線1'][x], df['駅1'][x], df['徒歩3'][x], df['路線3'][x], df['駅3'][x] = df['徒歩3'][x], df['路線3'][x], df['駅3'][x], df['徒歩1'][x], df['路線1'][x], df['駅1'][x]
 
-df.to_csv('suumo_oookayama_data.csv', sep='\t', encoding='utf-16')
 
 #suumo_oookayama_data.csvは全データ,suumo_oookayama_for.analysis.csvは分析に必要な数値データと名前だけ
 df = df.drop(["住所","区","市町村","路線1","駅1","路線2","駅2",
     "徒歩2","路線3","駅3","徒歩3","賃料","管理費","敷金","礼金"], axis=1)
 
-df.to_csv('suumo_oookayama_for.analysis.csv', sep='\t', encoding='utf-16')
+df.to_csv('suumo_oookayama_around_for.analysis.csv', sep='\t', encoding='utf-16')
 
