@@ -1,4 +1,4 @@
-import pandas as pd #pandasのインポート
+import pandas as pd #pandasのインポート!!!
 from sklearn.model_selection import train_test_split #データ分割用
 from sklearn.ensemble import RandomForestClassifier #ランダムフォレスト
 from sklearn.ensemble import RandomForestRegressor #ランダムフォレスト
