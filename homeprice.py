@@ -7,8 +7,8 @@ import pandas as pd
 from pandas import Series, DataFrame
 import time
 
-# suumo大岡山の賃貸情報1ページ目
-url = 'https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=030&bs=040&ra=013&cb=0.0&ct=9999999&et=9999999&cn=9999999&mb=0&mt=9999999&shkr1=03&shkr2=03&shkr3=03&shkr4=03&fw2=&ek=020528780&ek=020521470&ek=020505520&ek=020506660&rn=0205&ek=021530650&ek=021511320&ek=021505520&ek=021537110&ek=021518410&rn=0215'
+# 大岡山の賃貸情報1ページ目
+url = 'https:'
 # データ取得
 result = requests.get(url)
 c = result.content
