@@ -1,2 +1,2 @@
 # home-price-prediction
-homepriceprediction.py -> maesyori.py -> randomforest.py
+homeprice.py -> maesyori.py -> randomforest.py
