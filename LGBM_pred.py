@@ -28,27 +28,24 @@ class lgbm_:
         """
         # パラメータを設定
         params = {
-            "objective": "binary",
-            "metric": "auc",
+            "objective": "regression",
+            "metric": "rmse",
             "verbosity": -1,
             "boosting_type": "gbdt",
-            "num_leaves": trial.suggest_int("num_leaves", 10, 500),
-            "max_depth": trial.suggest_int("max_depth", 8, 24),
+            "num_leaves": trial.suggest_int("num_leaves", 10, 200),
+            "max_depth": trial.suggest_int("max_depth", 3, 8),
             "learning_rate": trial.suggest_loguniform("learning_rate", 1e-8, 1.0),
             "reg_alpha": trial.suggest_loguniform("reg_alpha", 1e-5, 1.0),
             "reg_lambda": trial.suggest_loguniform("reg_lambda", 1e-5, 1.0),
-            "feature_fraction": trial.suggest_uniform("feature_fraction", 0.3, 1.0),
-            "bagging_fraction": trial.suggest_uniform("bagging_fraction", 0.3, 1.0),
-            "bagging_freq": trial.suggest_int("bagging_freq", 1, 8),
             "min_child_samples": trial.suggest_int("min_child_samples", 5, 80),
             "random_state": 8,
         }
         # モデルにチューニングしたパラメータを渡す
-        model = lgb.LGBMClassifier(**params, n_estimators=1000)
+        model = lgb.LGBMRegressor(**params, n_estimators=1000)
         # KFold分割し、評価を行う
         kf = KFold(n_splits=4, shuffle=True, random_state=8)
         scores = cross_validate(
-            model, X=self.x_train, y=self.y_train, scoring="roc_auc", cv=kf
+            model, X=self.x_train, y=self.y_train, scoring="neg_mean_squared_error", cv=kf
         )
         return scores["test_score"].mean()
 
@@ -68,8 +65,8 @@ class lgbm_:
             # サーチしたパラメータの表示
             best_params = study.best_params
             params = {
-                "objective": "binary",
-                "metric": "auc",
+                "objective": "regression",
+                "metric": "rmse",
                 "verbosity": -1,
                 "boosting_type": "gbdt",
                 "num_leaves": best_params["num_leaves"],
@@ -77,9 +74,6 @@ class lgbm_:
                 "learning_rate": best_params["learning_rate"],
                 "reg_alpha": best_params["reg_lambda"],
                 "reg_lambda": best_params["reg_lambda"],
-                "feature_fraction": best_params["feature_fraction"],
-                "bagging_fraction": best_params["bagging_fraction"],
-                "bagging_freq": best_params["bagging_freq"],
                 "min_child_samples": best_params["min_child_samples"],
                 "random_state": 42,
             }
@@ -87,19 +81,12 @@ class lgbm_:
         # 調整したハイパーパラメータを渡す
         else:
             params = {
-                "objective": "binary",
-                "metric": "auc",
+                "objective": "regression",
+                "metric": "rmse",
                 "verbosity": -1,
                 "boosting_type": "gbdt",
                 "num_leaves": 200,
                 "max_depth": 8,
-                "learning_rate": 0.0006216650962079255,
-                "reg_alpha": 5.724923417643284e-05,
-                "reg_lambda": 0.010582680826994768,
-                "feature_fraction": 0.34650451688355577,
-                "bagging_fraction": 0.7842272116127241,
-                "bagging_freq": 1,
-                "min_child_samples": 76,
                 "random_state": 42,
             }
 

@@ -1,15 +1,21 @@
 #!/usr/bin/env python
 # coding: utf-8
-
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 from pandas import Series
 from tqdm import tqdm
 
-# 大岡山の賃貸情報1ページ目
-url = "https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=030&bs=040&ta=13&sc=13101&sc=13102&sc=13103&sc=13104&sc=13105&sc=13113&sc=13106&sc=13107&sc=13108&sc=13118&sc=13121&sc=13122&sc=13123&sc=13109&sc=13110&sc=13111&sc=13112&sc=13114&sc=13115&sc=13120&sc=13116&sc=13117&sc=13119&cb=0.0&ct=9999999&et=9999999&cn=9999999&mb=0&mt=9999999&shkr1=03&shkr2=03&shkr3=03&shkr4=03&fw2=&srch_navi=1"
+file_name = "ohimachi"
+# 賃貸情報1ページ目
+all_url = "https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=030&bs=040&ta=13&sc=13101&sc=13102&sc=13103&sc=13104&sc=13105&sc=13113&sc=13106&sc=13107&sc=13108&sc=13118&sc=13121&sc=13122&sc=13123&sc=13109&sc=13110&sc=13111&sc=13112&sc=13114&sc=13115&sc=13120&sc=13116&sc=13117&sc=13119&cb=0.0&ct=9999999&et=9999999&cn=9999999&mb=0&mt=9999999&shkr1=03&shkr2=03&shkr3=03&shkr4=03&fw2=&srch_navi=1"
+ohimachi_url = "https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=030&bs=040&ra=013&cb=0.0&ct=9999999&et=9999999&cn=9999999&mb=0&mt=9999999&shkr1=03&shkr2=03&shkr3=03&shkr4=03&fw2=&rn=0215"
+
 # データ取得
+if file_name:
+    url = ohimachi_url
+else:
+    url = all_url
 result = requests.get(url)
 c = result.content
 
@@ -245,5 +251,6 @@ suumo_df.columns = [
     "間取り",
     "専有面積",
 ]
+
 # csvファイルとして保存
-suumo_df.to_csv("all23.csv", sep="\t", encoding="utf-16", index=False)
+suumo_df.to_csv(f"{file_name}.csv", sep="\t", encoding="utf-16", index=False)

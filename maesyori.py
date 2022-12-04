@@ -1,7 +1,7 @@
 # 必要なライブラリをインポート
 import pandas as pd
 
-file_name = "all23"
+file_name = "ohimachi"
 df_oookayama = pd.read_csv(f"{file_name}.csv", sep="\t", encoding="utf-16")
 # 敷金と礼金は一つ一つのデータ
 
