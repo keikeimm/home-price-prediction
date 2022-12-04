@@ -1,4 +1,4 @@
-import pandas as pd #pandasのインポート
+import pandas as pd  # pandasのインポート
 import lightgbm as lgb
 import optuna
 from sklearn.model_selection import KFold, cross_validate
@@ -105,33 +105,39 @@ class lgbm_:
 
         model2 = lgb.LGBMRegressor(**params, n_estimators=1000)
         model2.fit(self.x_train, self.y_train)
-        pred = model2.predict(
-            self.x_test, num_iteration=model2.best_iteration_
-        )
-        return pred # 各モデルの平均
+        pred = model2.predict(self.x_test, num_iteration=model2.best_iteration_)
+        return pred  # 各モデルの平均
 
-file_name = "ohinmachi_line"
-df_23 = pd.read_csv(f'preprocess_{file_name}.csv', sep='\t', encoding='utf-16', )
 
-analysis_data = df_23.drop(['名前','賃料+管理費'], axis=1)
-train_z = df_23['名前']
-train_y = df_23['賃料+管理費']
+file_name = "all23"
+df_23 = pd.read_csv(
+    f"preprocess_{file_name}.csv",
+    sep="\t",
+    encoding="utf-16",
+)
+
+analysis_data = df_23.drop(["名前", "賃料+管理費"], axis=1)
+train_z = df_23["名前"]
+train_y = df_23["賃料+管理費"]
 train_X = analysis_data
 
-df_pred = pd.read_csv('suumo_oookayama_around_for.analysis.csv', sep='\t', encoding='utf-16')
+pfile_name = "ohimachi"
+df_pred = pd.read_csv(
+    f"preprocess_{pfile_name}.csv", sep="\t", encoding="utf-16"
+)
 
-analysis_data2 = df_pred.drop(['名前','賃料+管理費'], axis=1)
-test_z = df_pred['名前']
-test_y = df_pred['賃料+管理費']
+analysis_data2 = df_pred.drop(["名前", "賃料+管理費"], axis=1)
+test_z = df_pred["名前"]
+test_y = df_pred["賃料+管理費"]
 test_X = analysis_data2
 
 # lightGBMによる予測
 model = lgbm_(train_X, train_y, test_X)
 pred_price = model.pred(search=True)
 
-#ランダムサーチの結果をcsvに保存
+# ランダムサーチの結果をcsvに保存
 pred_price = pd.Series(pred_price, index=test_y.index)
 dfprice = pd.concat([test_z, test_y, pred_price], axis=1)
-dfprice.columns = ['名前', '実際の値段', '予測値段']
+dfprice.columns = ["名前", "実際の値段", "予測値段"]
 
-dfprice.to_csv(f'{file_name}_prediction.csv', sep='\t', encoding='utf-8')
+dfprice.to_csv(f"{file_name}_prediction.csv", sep="\t", encoding="utf-16")
