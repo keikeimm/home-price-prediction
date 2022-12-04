@@ -4,11 +4,11 @@
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
-from pandas import Series, DataFrame
-import time
+from pandas import Series
+from tqdm import tqdm
 
 # 大岡山の賃貸情報1ページ目
-url = 'https:'
+url = 'https://suumo.jp/jj/chintai/ichiran/FR301FC001/?ar=030&bs=040&ta=13&sc=13101&sc=13102&sc=13103&sc=13104&sc=13105&sc=13113&sc=13106&sc=13107&sc=13108&sc=13118&sc=13121&sc=13122&sc=13123&sc=13109&sc=13110&sc=13111&sc=13112&sc=13114&sc=13115&sc=13120&sc=13116&sc=13117&sc=13119&cb=0.0&ct=9999999&et=9999999&cn=9999999&mb=0&mt=9999999&shkr1=03&shkr2=03&shkr3=03&shkr4=03&fw2=&srch_navi=1'
 # データ取得
 result = requests.get(url)
 c = result.content
@@ -72,7 +72,7 @@ def get_informaion_about_home(html_elements, obj_list):
 
 
 # 各ページで以下の動作をループ
-for url in urls:
+for url in tqdm(urls):
     # 物件リストを切り出し
     result = requests.get(url)
     c = result.content
@@ -197,4 +197,4 @@ suumo_df = pd.concat([name, address, locations0, locations1, locations2, age,
 suumo_df.columns = ['名前', '住所', '立地1', '立地2', '立地3', '築年数',
                     '建物の高さ', '階', '賃料', '管理費', '敷金', '礼金', '間取り', '専有面積']
 # csvファイルとして保存
-suumo_df.to_csv('suumo_oookayama_around.csv', sep='\t', encoding='utf-16')
+suumo_df.to_csv('all23.csv', sep='\t', encoding='utf-8')

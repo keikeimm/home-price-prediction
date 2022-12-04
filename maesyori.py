@@ -2,7 +2,8 @@
 import pandas as pd
 import numpy as np
 
-df_oookayama = pd.read_csv('example.csv', sep='\t', encoding='utf-16')
+file_name = "all23.csv"
+df_oookayama = pd.read_csv(file_name, sep='\t', encoding='utf-8')
 # 敷金と礼金は一つ一つのデータ
 
 # axis=0は縦方向に連結、ignore_indes=Trueは初めに与えられたindexを無視する。
@@ -193,5 +194,4 @@ for x in range(len(df)):
 df = df.drop(["住所","区","市町村","路線1","駅1","路線2","駅2",
     "徒歩2","路線3","駅3","徒歩3","賃料","管理費","敷金","礼金"], axis=1)
 
-df.to_csv('suumo_oookayama_around_for.analysis.csv', sep='\t', encoding='utf-16')
-
+df.to_csv(f'preprocess_{file_name}.csv', sep='\t', encoding='utf-8', index=False)
